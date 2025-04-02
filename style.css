@@ -1,0 +1,597 @@
+/* Basic Reset & Font */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px; /* Base for rem */
+}
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    font-size: clamp(0.6rem, 1.2vw + 0.1rem, 0.9rem); /* Base scaling font */
+    background-color: #3a3a3a;
+    background-image: url('images/stone_bg.png');
+    color: #e0e0e0;
+    min-height: 100vh; /* Consider 100dvh for mobile */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: clamp(10px, 2vh, 20px) clamp(10px, 2vw, 20px); /* Scaled padding */
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto; /* Allow scroll as fallback */
+}
+
+/* --- Wrapper for Game + Icons --- */
+.game-environment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1600px;
+    gap: clamp(15px, 2vh + 1vw, 40px); /* Scaled gap */
+    flex-grow: 1;
+}
+
+/* --- Side Icons --- */
+.side-icon {
+    width: clamp(60px, 12vw, 200px); /* Scaled width */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    z-index: 20;
+    flex-shrink: 0;
+    gap: clamp(4px, 1vh, 10px); /* Scaled gap */
+}
+
+.side-icon > img {
+    width: clamp(40px, 10vw, 180px); /* Scaled image */
+    max-width: 90%;
+    height: auto;
+    display: block;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.side-icon > img:hover {
+    transform: scale(1.1);
+}
+
+.side-icon > span {
+    font-size: 1.8em; /* << RESTORED Original Font Size */
+    color: #c8b084;
+    line-height: 1.1;
+    user-select: none;
+    pointer-events: none;
+    display: block;
+}
+
+/* --- Sub-Icon Styles --- */
+.sub-icon {
+    margin-top: clamp(10px, 2vh, 25px); /* Scaled margin */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.sub-icon img {
+    width: clamp(30px, 8vw, 150px); /* Scaled image */
+    max-width: 80%;
+    height: auto;
+    display: block;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.sub-icon img:hover {
+    transform: scale(1.1);
+}
+
+.sub-icon span {
+    font-size: 1.8em; /* << RESTORED Original Font Size */
+    color: #b8a074;
+    line-height: 1.1;
+    margin-top: 6px; /* << RESTORED Original Margin */
+    display: block;
+    user-select: none;
+}
+
+/* --- Main Game Area --- */
+.main-game-area {
+    max-width: 1200px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    flex-shrink: 1;
+    min-height: 0;
+    flex-grow: 1;
+}
+
+/* --- Game Container & Title --- */
+.game-container {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 20px; /* << RESTORED Original Padding */
+    border: 4px solid #222;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    margin-bottom: 20px; /* << RESTORED Original Margin */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 0;
+}
+
+.game-title {
+    text-align: center;
+    margin-bottom: 30px; /* << RESTORED Original Margin */
+    background-color: #5a4a3a;
+    padding: 10px; /* << RESTORED Original Padding */
+    border: 3px solid #2d241d;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
+    flex-shrink: 0;
+}
+.game-title h1 {
+    font-size: clamp(1.5rem, 4vw + 0.5rem, 2.5em); /* Use clamp but match original max 'em' */
+    color: #c8b084;
+    text-shadow: 2px 2px #000;
+}
+
+/* --- Game Board Layout --- */
+.game-board {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 0;
+}
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px; /* << RESTORED Original Gap */
+    margin-bottom: 15px; /* << RESTORED Original Margin */
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.category-header {
+    background-color: rgba(40, 30, 20, 0.7);
+    padding: 15px 5px; /* << RESTORED Original Padding */
+    font-size: 0.8em; /* << RESTORED Original Font Size */
+    border: 2px solid #1a140d;
+    min-height: 60px; /* << RESTORED Original Min Height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.2;
+    word-break: break-word;
+}
+
+.questions-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px; /* << RESTORED Original Gap */
+    flex-grow: 1;
+    min-height: 0;
+}
+
+.category-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* << RESTORED Original Gap */
+    align-items: center;
+    min-height: 0;
+}
+
+/* --- Chest Styling --- */
+.chest {
+    width: 100%;
+    /* Keep scaled max-width and aspect ratio */
+    max-width: clamp(60px, 15vw, 160px);
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s ease, opacity 0.3s ease, box-shadow 0.4s ease-in-out, outline 0.4s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+.chest:hover:not(.opened):not(.temp-frog-highlight) {
+    transform: scale(1.05);
+}
+.chest img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    transition: opacity 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.chest.opened {
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    outline: none !important;
+    box-shadow: none !important;
+    animation: none !important;
+    transform: none !important;
+}
+.chest.opened .frog-multiplier-text {
+    display: none;
+}
+
+/* --- Frog of Fate Styles --- */
+.frog-highlight-2x { outline: 4px solid #FFD700; outline-offset: 2px; box-shadow: 0 0 15px 5px #FFD700; z-index: 5; border-radius: 5px; }
+.frog-highlight-4x { outline: 5px solid #32CD32; outline-offset: 3px; box-shadow: 0 0 25px 8px #32CD32, 0 0 4px 1px rgba(255, 255, 255, 0.7) inset; z-index: 6; border-radius: 7px; }
+.frog-highlight-8x { outline: 6px solid #1E90FF; outline-offset: 4px; box-shadow: 0 0 35px 12px #1E90FF, 0 0 8px 3px rgba(255, 255, 255, 0.8) inset; z-index: 7; border-radius: 9px; animation: frog-pulse-medium 1.5s infinite ease-in-out; }
+.frog-highlight-16x { outline: 7px solid #DA70D6; outline-offset: 5px; box-shadow: 0 0 50px 16px #DA70D6, 0 0 12px 5px rgba(255, 255, 255, 0.9) inset; z-index: 8; border-radius: 11px; animation: frog-pulse-strong 1s infinite ease-in-out; }
+.temp-frog-highlight { outline: 4px dashed rgba(255, 255, 255, 0.6); outline-offset: 2px; box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.5); z-index: 5; border-radius: 5px; opacity: 0.85; transition: none; }
+
+.frog-multiplier-text {
+    position: absolute;
+    top: -10px; /* << RESTORED Original Position */
+    right: -10px; /* << RESTORED Original Position */
+    background-color: rgba(0, 0, 0, 0.9);
+    font-size: 1em; /* << RESTORED Original Font Size */
+    padding: 4px 8px; /* << RESTORED Original Padding */
+    border-radius: 50%;
+    font-weight: bold;
+    z-index: 10;
+    pointer-events: none;
+    text-shadow: 1px 1px 2px #000;
+    min-width: 32px; /* << RESTORED Original Min Size */
+    min-height: 32px; /* << RESTORED Original Min Size */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    border-width: 2px;
+    border-style: solid;
+    color: #FFD700; border-color: #FFD700;
+}
+.frog-multiplier-text.level-2 { color: #32CD32; border-color: #32CD32; }
+.frog-multiplier-text.level-3 { color: #1E90FF; border-color: #1E90FF; }
+.frog-multiplier-text.level-4 { color: #DA70D6; border-color: #DA70D6; }
+
+/* --- Animation Keyframes --- */
+@keyframes frog-pulse-medium { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.04); opacity: 0.8; } }
+@keyframes frog-pulse-strong { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.06); opacity: 0.75; } }
+@keyframes frog-final-selection-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); } }
+.frog-final-choice-animation { animation: frog-final-selection-pulse 0.6s ease-in-out; }
+
+/* --- Player Info & Turn Controls --- */
+#player-info-area {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 15px; /* << RESTORED Original Gap */
+    margin-top: 20px; /* << RESTORED Original Margin */
+    padding: 10px; /* << RESTORED Original Padding */
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 3px solid #222;
+    width: 100%;
+    max-width: 1200px;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+}
+
+#player-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* << RESTORED Original Gap */
+    flex-grow: 1;
+}
+
+.turn-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* << RESTORED Original Gap */
+    flex-shrink: 0;
+}
+
+/* <<< RESTORED Turn Controls Button Style >>> */
+.turn-controls button {
+    font-family: 'Press Start 2P', cursive;
+    background-color: rgba(122, 106, 90, 0.6);
+    color: #e0e0e0;
+    border: 1px solid rgba(45, 36, 29, 0.8);
+    cursor: pointer;
+    font-size: 1em; /* Original */
+    padding: 0px 6px; /* Original */
+    line-height: 1.2;
+    transition: background-color 0.2s;
+    border-radius: 3px;
+}
+.turn-controls button:hover {
+     background-color: rgba(154, 138, 122, 0.8);
+}
+.turn-controls .turn-label {
+    display: none;
+}
+
+/* --- Player card styles --- */
+.player-card {
+    background-color: #4a3a2a;
+    border: 3px solid #2d241d;
+    padding: 10px; /* << RESTORED Original Padding */
+    text-align: center;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    flex-grow: 1;
+    flex-basis: 140px; /* << RESTORED Original Basis */
+    min-width: 130px; /* << RESTORED Original Min Width */
+}
+.player-card.active-turn { background-color: #6a5a4a; box-shadow: 0 0 15px 3px #ffcc00; }
+.player-name {
+    font-size: 0.9em; /* << RESTORED Original Font Size */
+    color: #c8b084;
+    margin-bottom: 8px; /* << RESTORED Original Margin */
+    text-shadow: 1px 1px #000;
+    word-break: break-word;
+}
+.player-score {
+    font-size: 1.3em; /* << RESTORED Original Font Size */
+    margin-bottom: 10px; /* << RESTORED Original Margin */
+    display: block;
+    transition: color 0.3s ease;
+}
+.player-score.score-positive { color: #90ee90; }
+.player-score.score-negative { color: #ff6b6b; }
+
+/* <<< RESTORED Score Buttons Style >>> */
+.score-buttons button {
+    font-family: 'Press Start 2P', cursive;
+    background: none;
+    border: 2px solid #90ee90;
+    color: #90ee90;
+    border-radius: 4px;
+    padding: 4px 6px; /* Original */
+    font-size: 0.7em; /* Original */
+    cursor: pointer;
+    margin: 0 4px; /* Original */
+    transition: background-color 0.2s, color 0.2s;
+}
+.score-buttons button:hover { background-color: #90ee90; color: #2d241d; }
+.score-buttons .subtract-score { border-color: #ff6b6b; color: #ff6b6b; }
+.score-buttons .subtract-score:hover { background-color: #ff6b6b; color: #2d241d; }
+
+/* Score Change Flash Animation */
+.player-score.score-change { animation: score-flash 0.5s ease-out; }
+@keyframes score-flash { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.7; } }
+
+/* --- Modal Styling (Shared Base) --- */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; background-color: rgba(0, 0, 0, 0.8); padding: 20px; }
+.modal-content { font-family: 'Press Start 2P', cursive; background-color: #4a3a2a; margin: auto; padding: 30px; /* << RESTORED Original Padding */ border: 5px solid #2d241d; width: 80%; max-width: 600px; color: #f0e0c0; position: relative; text-align: center; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); max-height: 90vh; overflow-y: auto; }
+.close-button { color: #aaa; position: absolute; top: 10px; /* Original */ right: 20px; /* Original */ font-size: 28px; /* Original */ font-weight: bold; cursor: pointer; z-index: 10; line-height: 1; }
+.close-button:hover, .close-button:focus { color: #fff; text-decoration: none; }
+
+/* --- Generic Info Modal Styles --- */
+.info-modal .modal-content { max-width: 500px; background-color: #5a4a3a; color: #e0e0e0; }
+.info-modal h3 { font-size: clamp(1em, 1.5vw + 0.5rem, 1.2em); /* Keep scaled */ margin-bottom: 15px; color: #c8b084; text-shadow: 1px 1px #000; }
+.info-modal p { font-size: 0.9em; /* << RESTORED Original Font Size */ margin-bottom: 25px; line-height: 1.4; }
+/* <<< RESTORED Info Modal Button Style >>> */
+.info-modal button {
+    font-family: 'Press Start 2P', cursive;
+    padding: 10px 25px; /* Original */
+    background-color: #7a6a5a; /* Original */
+    color: #f0e0c0; /* Original */
+    border: 2px solid #2d241d; /* Original */
+    cursor: pointer;
+    font-size: 0.9em; /* Original */
+    transition: background-color 0.2s;
+}
+.info-modal button:hover { background-color: #9a8a7a; }
+
+/* --- Seer Peek Modal Styles --- */
+.seer-peek-modal .modal-content { max-width: 500px; background-color: #4a315a; border: 5px solid #2d1d3a; color: #e0d0f0; }
+.seer-peek-modal h3 { font-size: clamp(1em, 1.5vw + 0.5rem, 1.2em); /* Keep scaled */ margin-bottom: 15px; color: #e8d8ff; text-shadow: 1px 1px #1a0a2a; }
+.seer-peek-modal p { font-size: 0.9em; /* << RESTORED Original Font Size */ margin-bottom: 10px; line-height: 1.3; }
+#seer-peek-words { font-size: 1.1em; /* << RESTORED Original Font Size */ color: #fff; background-color: rgba(0,0,0,0.3); padding: 15px; margin: 10px 0 20px 0; border: 1px dashed #a898ba; min-height: 50px; display: flex; justify-content: center; align-items: center; text-align: center; line-height: 1.5; word-spacing: 0.5em; flex-wrap: wrap; gap: 0.5em; }
+.seer-peek-buttons { margin-top: 20px; display: flex; justify-content: center; gap: 15px; }
+/* <<< RESTORED Seer Peek Button Style >>> */
+.seer-peek-buttons button {
+    font-family: 'Press Start 2P', cursive;
+    padding: 10px 20px; /* Original */
+    border: 2px solid #2d1d3a; /* Original */
+    cursor: pointer;
+    font-size: 0.85em; /* Original */
+    transition: background-color 0.2s, color 0.2s;
+}
+#seer-accept-btn { background-color: #7a5a8a; color: #f0e0ff; }
+#seer-accept-btn:hover { background-color: #9a7aaa; }
+#seer-reject-btn { background-color: #5a4a6a; color: #d0c0e0; }
+#seer-reject-btn:hover { background-color: #7a6a8a; }
+
+/* --- Chest Available for Seer Peek --- */
+.chest.seer-peek-available { outline: 3px dashed #a898ba; outline-offset: 3px; box-shadow: 0 0 15px 4px #7a5a8a; cursor: pointer; }
+.chest.seer-peek-available:hover { transform: scale(1.08); outline-style: solid; }
+.chest.seer-peek-available.opened { outline: none !important; box-shadow: none !important; cursor: default; opacity: 0.5; transform: none !important; }
+
+/* --- Visibility Control --- */
+body.setup-active .game-environment, body.game-active .setup-modal { display: none; }
+body.setup-active .setup-modal, body.game-active .game-environment { display: flex; }
+body.game-active .modal[style*="display: flex"] { justify-content: center; align-items: center; }
+
+/* --- Player Select Modal Styles --- */
+.player-select-modal .modal-content { max-width: 450px; background-color: #6a4a3a; }
+#player-select-list { margin-top: 20px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+/* <<< RESTORED Player Select Button Style >>> */
+#player-select-list button {
+    font-family: 'Press Start 2P', cursive;
+    padding: 10px 20px; /* Original */
+    background-color: #4a3a2a; /* Original */
+    color: #c8b084; /* Original */
+    border: 2px solid #2d241d; /* Original */
+    cursor: pointer;
+    font-size: 0.9em; /* Original */
+    transition: background-color 0.2s, color 0.2s;
+    width: 80%;
+    max-width: 250px;
+}
+#player-select-list button:hover { background-color: #2d241d; color: #f0e0c0; }
+
+/* --- Setup Modal Specific Styles --- */
+.setup-content { background-color: #5a4a3a; color: #e0e0e0; }
+.setup-content h2 { font-size: clamp(1.1em, 1.8vw + 0.5rem, 1.4em); /* Keep scaled */ margin-bottom: 20px; color: #c8b084; text-shadow: 1px 1px #000; }
+#player-count-step label, #player-names-step p { font-size: 0.9em; /* << RESTORED Original Font Size */ display: block; margin-bottom: 10px; }
+/* <<< RESTORED Setup Input Styles >>> */
+#player-count-step input[type="number"],
+#player-names-step input[type="text"] {
+    font-family: 'Press Start 2P', cursive;
+    padding: 8px; /* Original */
+    margin-bottom: 15px;
+    border: 2px solid #2d241d; /* Original */
+    background-color: #f0e0c0; /* Original */
+    color: #333; /* Original */
+}
+#player-count-step input[type="number"] { width: 80px; text-align: center; }
+#player-names-step input[type="text"] { width: 80%; max-width: 250px; display: block; margin-left: auto; margin-right: auto; text-align: left; } /* Original Alignment */
+
+#player-name-inputs { margin-bottom: 20px; }
+/* <<< RESTORED Setup Button Style >>> */
+.setup-content button {
+    font-family: 'Press Start 2P', cursive;
+    padding: 10px 15px; /* Original */
+    background-color: #7a6a5a; /* Original */
+    color: #f0e0c0; /* Original */
+    border: 2px solid #2d241d; /* Original */
+    cursor: pointer;
+    font-size: 0.9em; /* Original */
+    transition: background-color 0.2s;
+    margin-top: 10px;
+}
+.setup-content button:hover { background-color: #9a8a7a; }
+.error-message { color: #ff6b6b; font-size: 0.8em; margin-top: 10px; min-height: 1em; display: none; }
+
+/* --- Question Modal Specific Styles --- */
+#question-points-display { font-size: 2em; /* << RESTORED Original Font Size */ color: #ffcc00; text-shadow: 2px 2px #000000; margin-bottom: 25px; /* << RESTORED Original Margin */ line-height: 1.2; font-weight: bold; }
+#question-text { font-size: 1.4em; /* << RESTORED Original Font Size */ margin-bottom: 20px; min-height: 80px; line-height: 1.5; }
+#answer-text { font-size: 1.2em; /* << RESTORED Original Font Size */ margin-top: 15px; margin-bottom: 25px; color: #90ee90; line-height: 1.4; }
+/* <<< RESTORED Question Modal Button Style >>> */
+.question-content button {
+    font-family: 'Press Start 2P', cursive;
+    padding: 10px 20px; /* Original */
+    background-color: #7a6a5a; /* Original */
+    color: #f0e0c0; /* Original */
+    border: 2px solid #2d241d; /* Original */
+    cursor: pointer;
+    font-size: 1em; /* Original */
+    transition: background-color 0.2s;
+    margin: 10px 5px 0 5px;
+    display: inline-block;
+}
+.question-content button:hover { background-color: #9a8a7a; }
+
+/* --- Card Modal --- */
+.card-content { background-color: #3f3121; }
+.card-content h2 { font-size: clamp(1.1em, 1.8vw + 0.5rem, 1.4em); /* Keep scaled */ color: #c8b084; margin-bottom: 20px; }
+#card-image-container { width: 100%; max-width: 300px; margin: 0 auto; }
+#card-image { display: block; width: 100%; height: auto; border: 3px solid #1a140d; image-rendering: pixelated; image-rendering: -moz-crisp-edges; image-rendering: crisp-edges; }
+
+
+/* === Responsive Adjustments === */
+/* Keep structural changes from previous version, clamp() handles most sizing */
+
+@media (max-width: 1400px) {
+    .game-environment { flex-direction: column; gap: clamp(15px, 3vh, 25px); padding: 0 clamp(5px, 2vw, 10px); }
+    .main-game-area { width: 100%; order: 2; flex-grow: 1; }
+    .side-icon { margin: clamp(10px, 2vh, 15px) 0; order: 1; }
+    /* <<< RESTORED Original Stacked Side Icon Sizes >>> */
+    .game-environment[style*="flex-direction: column"] .side-icon { width: 80px; gap: 3px; }
+    .game-environment[style*="flex-direction: column"] .side-icon > img { width: 60px; max-width: none; }
+    .game-environment[style*="flex-direction: column"] .side-icon span { font-size: 0.65em; } /* Adjust if needed */
+    .game-environment[style*="flex-direction: column"] .sub-icon { margin-top: 15px; }
+    .game-environment[style*="flex-direction: column"] .sub-icon img { width: 75%; max-width: 50px; }
+    .game-environment[style*="flex-direction: column"] .sub-icon span { font-size: 0.65em; } /* Adjust if needed */
+}
+
+@media (max-width: 900px) {
+     .categories, .questions-grid { grid-template-columns: repeat(3, 1fr); /* Structural */ gap: 8px; /* Original medium gap */ }
+     .category-header { font-size: 0.75em; } /* Original medium font */
+     .chest { /* max-width: clamp(...) handles this */ }
+     .player-card { flex-basis: 140px; min-width: 130px;} /* Keep original medium size */
+     #player-info-area { justify-content: space-around; }
+     /* Side icons smaller on medium screens (original) */
+     /* Apply only if NOT stacked */
+     .game-environment:not([style*="flex-direction: column"]) .side-icon:not(:only-child) { width: 100px; }
+     .game-environment:not([style*="flex-direction: column"]) .side-icon > img { max-width: 80px; }
+     .game-environment:not([style*="flex-direction: column"]) .sub-icon img { max-width: 65px; }
+}
+
+@media (max-width: 768px) {
+    body { padding: 10px; } /* Original small padding */
+    .game-title h1 { font-size: 1.8em; } /* Original small title */
+    .category-header { font-size: 0.7em; min-height: 50px; padding: 10px 2px; } /* Original small header */
+    #question-text { font-size: 1.1em; } /* Original small question */
+    #answer-text { font-size: 1em; } /* Original small answer */
+    .player-card { min-width: 120px; flex-basis: 120px; padding: 10px;} /* Original small card */
+    .player-name { font-size: 0.9em; } /* Original small name */
+    .player-score { font-size: 1.2em; } /* Original small score */
+    .score-buttons button { font-size: 0.7em; padding: 4px 6px;} /* Original small buttons */
+    #player-info-area { gap: 10px; width: 100%; padding: 10px;} /* Original small player area */
+    .turn-controls { gap: 5px; }
+    .turn-controls button { font-size: 0.9em; padding: 1px 5px;} /* Original small turn button */
+
+    /* Further reduce side icon size when stacked (original) */
+    .game-environment[style*="flex-direction: column"] .side-icon { width: 70px; gap: 4px; }
+    .game-environment[style*="flex-direction: column"] .side-icon > img { max-width: 50px; }
+    .game-environment[style*="flex-direction: column"] .side-icon span { font-size: 0.6em; }
+    .game-environment[style*="flex-direction: column"] .sub-icon img { max-width: 40px; }
+    .game-environment[style*="flex-direction: column"] .sub-icon span { font-size: 0.6em; }
+    .game-environment[style*="flex-direction: column"] .sub-icon { margin-top: 12px; }
+}
+
+@media (max-width: 600px) {
+     /* chest max-width: clamp(...) handles this */
+     .categories, .questions-grid { grid-template-columns: repeat(2, 1fr); /* Structural */ gap: 5px; /* Original tiny gap */ }
+     #player-info-area { flex-direction: column; /* Structural */ }
+     #player-cards-container { justify-content: center; width: 100%;}
+     .turn-controls { margin-top: 10px; }
+     .player-card { flex-basis: 150px; min-width: 140px;} /* Original tiny card size */
+
+     /* Side icons when stacked (original) */
+     .game-environment[style*="flex-direction: column"] .side-icon { width: 60px; }
+     .game-environment[style*="flex-direction: column"] .side-icon > img { max-width: 45px; }
+     .game-environment[style*="flex-direction: column"] .sub-icon img { max-width: 35px; }
+}
+
+@media (max-width: 480px) {
+    .game-title h1 { font-size: 1.5em; } /* Original smallest title */
+    .category-header { font-size: 0.65em; line-height: 1.1; min-height: 40px;} /* Original smallest header */
+    /* chest max-width: clamp(...) handles this */
+    .modal-content { width: 95%; padding: 20px; } /* Original smallest padding */
+    .close-button { font-size: 24px; top: 5px; right: 10px; } /* Original smallest close */
+    #player-cards-container { flex-direction: column; /* Structural */ align-items: center; gap: 8px; }
+    .player-card { width: 80%; min-width: unset; flex-basis: auto; flex-grow: 0;} /* Original full stack */
+    .turn-controls { padding: 5px 10px;}
+    .turn-controls button { font-size: 1em; padding: 1px 8px;} /* Original smallest turn button */
+
+    /* Side icons smallest (original) */
+    .game-environment[style*="flex-direction: column"] .side-icon { width: 50px; gap: 2px; }
+    .game-environment[style*="flex-direction: column"] .side-icon > img { max-width: 35px; }
+    .game-environment[style*="flex-direction: column"] .side-icon span { font-size: 0.55em; }
+    .game-environment[style*="flex-direction: column"] .sub-icon img { max-width: 30px; }
+    .game-environment[style*="flex-direction: column"] .sub-icon span { font-size: 0.5em; margin-top: 2px;}
+    .game-environment[style*="flex-direction: column"] .sub-icon { margin-top: 8px; }
+}
