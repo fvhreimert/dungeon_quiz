@@ -35,13 +35,15 @@
         <!-- Left Side Icons -->
         <div class="side-icon left-icon">
             <!-- Card Jester -->
-            <img src="images/card_jester.png" alt="Draw Card" title="Draw Card" id="card-jester-img">
-            <span>Draw Card</span>
+            <img src="images/card_jester.png" alt="Card Jester" title="Card Jester" id="card-jester-img">
+            <span>Card Jester</span>
+            <span class="icon-price-tag">75 Pts</span> <!-- ADDED PRICE TAG -->
 
             <!-- NEW Drunken Seer (BELOW Jester) -->
             <div class="sub-icon" id="drunken-seer-icon">
                 <img src="images/drunken_seer.png" alt="Drunken Seer" title="Drunken Seer" id="drunken-seer-img">
                 <span>Drunken Seer</span> <!-- << ADDED TEXT -->
+                <span class="icon-price-tag">50 Pts</span> <!-- ADDED PRICE TAG -->
             </div>
         </div>
 
@@ -50,7 +52,7 @@
             <!-- TORCHES REMOVED -->
             <div class="game-container">
                 <header class="game-title">
-                    <h1>JEOPARDY!</h1>
+                    <h1>Sejt Quiz Navn!</h1>
                 </header>
                 <div class="game-board">
                     <div class="categories"></div>
@@ -64,15 +66,20 @@
 
         <!-- Right Side Icons -->
         <div class="side-icon right-icon">
-             <!-- Frog of Fate -->
-             <img src="images/frog_of_fate.png" alt="Frog of Fate" title="Frog of Fate" id="frog-of-fate-img">
-             <span>Frog of Fate</span>
+            <!-- Frog of Fate -->
+            <img src="images/frog_of_fate.png" alt="Frog of Fate" title="Frog of Fate" id="frog-of-fate-img">
+            <span>Frog of Fate</span>
+            <span class="icon-price-tag">100 Pts</span> <!-- ADDED PRICE TAG -->
 
-             <!-- NEW Sacrificial Goblet (BELOW Frog) -->
-             <div class="sub-icon" id="sacrificial-goblet-icon">
-                 <img src="images/sacrificial_goblet.png" alt="Sacrificial Goblet" title="Sacrificial Goblet" id="sacrificial-goblet-img">
-                 <span>Sacrifice</span> <!-- << ADDED TEXT -->
-             </div>
+            <!-- Blood Sacrifice (Sub-icon structure) -->
+            <div class="sub-icon" id="sacrificial-goblet-icon">
+                <img src="images/sacrificial_goblet.png" alt="Blood Sacrifice" title="Blood Sacrifice" id="sacrificial-goblet-img">
+                <!-- *** CHANGE TEXT HERE *** -->
+                <span>Blood Sacrifice</span>
+                <!-- *** END CHANGE *** -->
+            </div>
+            </div>
+            <!-- You might have other sub-icons here like Drunken Seer -->
         </div>
 
     </div> <!-- End Game Environment -->
@@ -118,7 +125,26 @@
         </div>
     </div>
 
-        <!-- Player Selection Modal (for Sacrificial Goblet) -->
+    <!-- Blood Sacrifice Input Modal -->
+    <div id="goblet-input-modal" class="modal">
+        <div class="modal-content goblet-input-content"> <!-- Add specific class -->
+            <span class="close-button goblet-input-close">×</span>
+            <h2 id="goblet-input-title">Blood Sacrifice</h2>
+            <p id="goblet-input-text">Choose the magnitude of the curse (0-200 points):</p>
+            <!-- *** ADD IMAGE HERE *** -->
+            <img id="goblet-symbol-img" src="images/sacrifical_symbol.png" alt="Sacrificial Symbol">
+            <!-- *** END IMAGE *** -->
+
+            <div class="goblet-slider-container">
+                <input type="range" id="goblet-amount-slider" min="0" max="200" value="100" step="10">
+                <span id="goblet-amount-display">100</span> points
+            </div>
+
+            <button id="goblet-accept-btn">Accept Penalty & Choose Victim</button>
+        </div>
+    </div>
+
+        <!-- Player Selection Modal (for Blood Sacrifice) -->
     <div id="player-select-modal" class="modal player-select-modal" style="display: none;"> <!-- Initially hidden -->
         <div class="modal-content player-select-content">
             <span class="close-button player-select-close">×</span>
@@ -141,6 +167,66 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <div id="inventory-modal" class="modal inventory-modal" style="display: none;">
+        <div class="modal-content inventory-content">
+            <span class="close-button inventory-close-button">×</span>
+            <h3 id="inventory-modal-title">Player Inventory</h3>
+            <div id="inventory-modal-cards" class="inventory-modal-cards-container">
+                <!-- Player card images will be added here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Roulette Modal -->
+    <div id="roulette-modal" class="modal roulette-modal" style="display: none;">
+        <div class="modal-content roulette-content">
+            <span class="close-button roulette-close-button">×</span>
+            <h2 id="roulette-modal-title">Spin the Wheel!</h2>
+            <img id="roulette-wheel-img" src="images/roulette_icon.png" alt="Roulette Wheel"> <!-- Optional Image -->
+            <p id="roulette-modal-text">How much will you wager? (0 - 500 points)</p>
+
+            <div class="roulette-slider-container">
+                <input type="range" id="roulette-amount-slider" min="0" max="500" value="100" step="10">
+                <span id="roulette-amount-display">100</span> points
+            </div>
+            <p id="roulette-error" class="error-message" style="display: none;"></p>
+            <button id="roulette-gamble-btn">Gamble!</button>
+        </div>
+    </div>
+
+    <!-- Treasure Map Modal -->
+    <div id="treasure-map-modal" class="modal treasure-map-modal" style="display: none;">
+        <div class="modal-content treasure-map-content">
+            <span class="close-button treasure-map-close-button">×</span>
+            <h2 id="treasure-map-modal-title">Ancient Treasure Map</h2>
+            <p id="treasure-map-modal-text">Combine the Shovel, Map, and Compass to reveal the treasure!</p>
+
+            <div class="treasure-card-slots">
+                <!-- Shovel Slot -->
+                <div class="treasure-slot" id="treasure-slot-shovel">
+                    <span class="slot-label">Shovel</span>
+                    <!-- CHANGE src here -->
+                    <img src="" alt="Shovel Slot" data-card-type="shovel">
+                </div>
+                <!-- Map Slot -->
+                <div class="treasure-slot" id="treasure-slot-map">
+                        <span class="slot-label">Map</span>
+                        <!-- CHANGE src here -->
+                    <img src="" alt="Map Slot" data-card-type="map">
+                </div>
+                <!-- Compass Slot -->
+                <div class="treasure-slot" id="treasure-slot-compass">
+                        <span class="slot-label">Compass</span>
+                        <!-- CHANGE src here -->
+                    <img src="" alt="Compass Slot" data-card-type="compass">
+                </div>
+            </div>
+
+            <button id="open-treasure-btn" disabled>Open Treasure</button>
+                <p id="treasure-map-status" class="treasure-status-message"></p> <!-- Optional status text -->
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>

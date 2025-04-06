@@ -11,47 +11,55 @@ html {
 
 body {
     font-family: 'Press Start 2P', cursive;
-    font-size: clamp(0.6rem, 1.2vw + 0.1rem, 0.9rem); /* Base scaling font */
+    font-size: clamp(0.6rem, 1.2vw + 0.1rem, 0.9rem);
     background-color: #3a3a3a;
-    background-image: url('images/stone_bg.png');
-    color: #e0e0e0;
-    min-height: 100vh; /* Consider 100dvh for mobile */
+    background-image: url('images/dungeon_brick.png');
+    background-size: 700px auto; /* Adjusted tile size */
+    background-repeat: repeat;
+    background-position: top left;
+    color: #e0e0e0; /* Default text color */
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: clamp(10px, 2vh, 20px) clamp(10px, 2vw, 20px); /* Scaled padding */
+    padding: clamp(10px, 2vh, 20px) clamp(10px, 2vw, 20px);
     position: relative;
-    overflow-x: hidden;
-    overflow-y: auto; /* Allow scroll as fallback */
+    overflow-x: hidden; /* Prevent accidental horizontal scroll */
+    overflow-y: auto;
 }
 
 /* --- Wrapper for Game + Icons --- */
 .game-environment {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; /* Vertically center icons and game area */
     width: 100%;
     max-width: 1600px;
-    gap: clamp(15px, 2vh + 1vw, 40px); /* Scaled gap */
+    max-height: 100vh; /* Prevent environment from exceeding viewport height */
+    gap: clamp(15px, 2vh + 1vw, 40px);
     flex-grow: 1;
+    padding-top: clamp(10px, 2vh, 20px);
+    padding-bottom: clamp(10px, 2vh, 20px);
 }
 
 /* --- Side Icons --- */
 .side-icon {
-    width: clamp(60px, 12vw, 200px); /* Scaled width */
+    width: clamp(60px, 12vw, 200px);
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     z-index: 20;
     flex-shrink: 0;
-    gap: clamp(4px, 1vh, 10px); /* Scaled gap */
+    gap: clamp(6px, 1.5vh, 12px);
+    padding-top: 20px;
+    position: relative; /* For price tag positioning */
 }
 
 .side-icon > img {
-    width: clamp(40px, 10vw, 180px); /* Scaled image */
-    max-width: 90%;
+    width: clamp(70px, 18vw, 240px);
+    max-width: 95%;
     height: auto;
     display: block;
     image-rendering: pixelated;
@@ -64,27 +72,29 @@ body {
     transform: scale(1.1);
 }
 
-.side-icon > span {
-    font-size: 1.8em; /* << RESTORED Original Font Size */
+.side-icon > span { /* Name below main icon */
+    font-size: 0.85em;
     color: #c8b084;
     line-height: 1.1;
     user-select: none;
     pointer-events: none;
     display: block;
+    margin-top: 4px;
 }
 
 /* --- Sub-Icon Styles --- */
 .sub-icon {
-    margin-top: clamp(10px, 2vh, 25px); /* Scaled margin */
+    margin-top: clamp(10px, 2vh, 25px);
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    position: relative; /* For price tag positioning */
 }
 
 .sub-icon img {
-    width: clamp(30px, 8vw, 150px); /* Scaled image */
-    max-width: 80%;
+    width: clamp(50px, 12vw, 190px);
+    max-width: 95%; /* Increased from 85% */
     height: auto;
     display: block;
     image-rendering: pixelated;
@@ -97,18 +107,48 @@ body {
     transform: scale(1.1);
 }
 
-.sub-icon span {
-    font-size: 1.8em; /* << RESTORED Original Font Size */
+.sub-icon span { /* Name below sub-icon */
+    font-size: 0.8em;
     color: #b8a074;
     line-height: 1.1;
-    margin-top: 6px; /* << RESTORED Original Margin */
+    margin-top: 6px;
     display: block;
     user-select: none;
+    pointer-events: none; /* Make sure text isn't blocking click */
+}
+
+/* --- Corner Price Tag Styling --- */
+.icon-price-tag {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 25;
+    background-color: #4d1f1f; /* Dark Red */
+    color: #ffcc00; /* Gold text */
+    font-family: 'Press Start 2P', cursive;
+    font-size: clamp(0.45em, 0.9vw + 0.1rem, 0.65em);
+    padding: 2px 5px;
+    border: 1px solid #330d0d;
+    border-radius: 3px;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: none;
+    display: inline-block;
+    line-height: 1.1;
+}
+/* Optional: Adjustment for sub-icon tags */
+.sub-icon .icon-price-tag {
+    top: 3px;
+    right: 3px;
+    font-size: clamp(0.4em, 0.8vw + 0.1rem, 0.6em);
+    padding: 1px 4px;
 }
 
 /* --- Main Game Area --- */
 .main-game-area {
-    max-width: 1200px;
+    /* max-width: 1200px; */
+    max-width: 1400px; /* INCREASED WIDTH */
     position: relative;
     display: flex;
     flex-direction: column;
@@ -118,16 +158,17 @@ body {
     flex-shrink: 1;
     min-height: 0;
     flex-grow: 1;
+    z-index: 1;
 }
 
 /* --- Game Container & Title --- */
 .game-container {
     background-color: rgba(0, 0, 0, 0.3);
-    padding: 20px; /* << RESTORED Original Padding */
+    padding: 15px;
     border: 4px solid #222;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     width: 100%;
-    margin-bottom: 20px; /* << RESTORED Original Margin */
+    margin-bottom: 0px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -136,15 +177,15 @@ body {
 
 .game-title {
     text-align: center;
-    margin-bottom: 30px; /* << RESTORED Original Margin */
+    margin-bottom: 30px;
     background-color: #5a4a3a;
-    padding: 10px; /* << RESTORED Original Padding */
+    padding: 10px;
     border: 3px solid #2d241d;
     box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
     flex-shrink: 0;
 }
 .game-title h1 {
-    font-size: clamp(1.5rem, 4vw + 0.5rem, 2.5em); /* Use clamp but match original max 'em' */
+    font-size: clamp(1.5rem, 4vw + 0.5rem, 2.5em);
     color: #c8b084;
     text-shadow: 2px 2px #000;
 }
@@ -157,40 +198,49 @@ body {
     min-height: 0;
 }
 
+/* --- Categories Row --- */
 .categories {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px; /* << RESTORED Original Gap */
-    margin-bottom: 15px; /* << RESTORED Original Margin */
+    /* grid-template-columns: repeat(5, 1fr); */
+    grid-template-columns: repeat(6, 1fr); /* CHANGED TO 6 */
+    gap: 10px;
+    margin-bottom: 15px;
     text-align: center;
     flex-shrink: 0;
+    position: relative;
+    z-index: 5;
 }
 
 .category-header {
-    background-color: rgba(40, 30, 20, 0.7);
-    padding: 15px 5px; /* << RESTORED Original Padding */
-    font-size: 0.8em; /* << RESTORED Original Font Size */
+    background-color: rgba(40, 30, 20, 0.8);
+    padding: 15px 5px;
+    font-size: 0.8em;
     border: 2px solid #1a140d;
-    min-height: 60px; /* << RESTORED Original Min Height */
+    min-height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
     line-height: 1.2;
     word-break: break-word;
+    color: #e0e0e0;
+    text-shadow: 1px 1px #000;
 }
 
+/* --- Questions Grid --- */
 .questions-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px; /* << RESTORED Original Gap */
+    /* grid-template-columns: repeat(5, 1fr); */
+    grid-template-columns: repeat(6, 1fr); /* CHANGED TO 6 */
+    gap: 10px;
     flex-grow: 1;
     min-height: 0;
 }
 
+
 .category-column {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* << RESTORED Original Gap */
+    gap: 5px;
     align-items: center;
     min-height: 0;
 }
@@ -198,7 +248,6 @@ body {
 /* --- Chest Styling --- */
 .chest {
     width: 100%;
-    /* Keep scaled max-width and aspect ratio */
     max-width: clamp(60px, 15vw, 160px);
     aspect-ratio: 1 / 1;
     cursor: pointer;
@@ -224,7 +273,6 @@ body {
     position: relative;
     z-index: 1;
 }
-
 .chest.opened {
     opacity: 0.5;
     cursor: default;
@@ -235,8 +283,30 @@ body {
     animation: none !important;
     transform: none !important;
 }
+.chest.opened .chest-points,
 .chest.opened .frog-multiplier-text {
-    display: none;
+    opacity: 0;
+    transition: opacity 0.1s ease;
+}
+
+/* --- Chest Points Text Style --- */
+.chest-points {
+    display: block;
+    position: absolute;
+    bottom: 5%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #ffcc00; /* Gold */
+    font-size: clamp(0.55em, 1.4vw, 0.8em);
+    font-weight: bold;
+    text-shadow: 1px 1px 1px #000, -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000;
+    line-height: 1;
+    padding: 1px 0;
+    z-index: 2;
+    pointer-events: none;
+    user-select: none;
+    transition: opacity 0.3s ease;
 }
 
 /* --- Frog of Fate Styles --- */
@@ -248,18 +318,18 @@ body {
 
 .frog-multiplier-text {
     position: absolute;
-    top: -10px; /* << RESTORED Original Position */
-    right: -10px; /* << RESTORED Original Position */
+    top: -12px;
+    right: -12px;
     background-color: rgba(0, 0, 0, 0.9);
-    font-size: 1em; /* << RESTORED Original Font Size */
-    padding: 4px 8px; /* << RESTORED Original Padding */
+    font-size: 1em;
+    padding: 4px 8px;
     border-radius: 50%;
     font-weight: bold;
     z-index: 10;
     pointer-events: none;
     text-shadow: 1px 1px 2px #000;
-    min-width: 32px; /* << RESTORED Original Min Size */
-    min-height: 32px; /* << RESTORED Original Min Size */
+    min-width: 32px;
+    min-height: 32px;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -277,147 +347,268 @@ body {
 @keyframes frog-pulse-strong { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.06); opacity: 0.75; } }
 @keyframes frog-final-selection-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); } }
 .frog-final-choice-animation { animation: frog-final-selection-pulse 0.6s ease-in-out; }
+@keyframes score-flash { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.7; } }
 
-/* --- Player Info & Turn Controls --- */
+/* --- Player Info Area --- */
 #player-info-area {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: center; /* Changed from stretch to center */
     justify-content: center;
-    gap: 15px; /* << RESTORED Original Gap */
-    margin-top: 20px; /* << RESTORED Original Margin */
-    padding: 10px; /* << RESTORED Original Padding */
+    gap: 15px;
+    margin-top: 20px;
+    padding: 10px;
     background-color: rgba(0, 0, 0, 0.4);
     border: 3px solid #222;
     width: 100%;
     max-width: 1200px;
     flex-wrap: wrap;
-    flex-shrink: 0;
+    flex-shrink: 1; /* Allow shrinking vertically */
 }
-
 #player-cards-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px; /* << RESTORED Original Gap */
+    gap: 10px;
     flex-grow: 1;
 }
 
-.turn-controls {
-    display: flex;
-    align-items: center;
-    gap: 5px; /* << RESTORED Original Gap */
-    flex-shrink: 0;
-}
-
-/* <<< RESTORED Turn Controls Button Style >>> */
-.turn-controls button {
-    font-family: 'Press Start 2P', cursive;
-    background-color: rgba(122, 106, 90, 0.6);
-    color: #e0e0e0;
-    border: 1px solid rgba(45, 36, 29, 0.8);
-    cursor: pointer;
-    font-size: 1em; /* Original */
-    padding: 0px 6px; /* Original */
-    line-height: 1.2;
-    transition: background-color 0.2s;
-    border-radius: 3px;
-}
-.turn-controls button:hover {
-     background-color: rgba(154, 138, 122, 0.8);
-}
-.turn-controls .turn-label {
-    display: none;
-}
-
-/* --- Player card styles --- */
+/* --- Player Card --- */
 .player-card {
     background-color: #4a3a2a;
     border: 3px solid #2d241d;
-    padding: 10px; /* << RESTORED Original Padding */
+    padding: 10px;
     text-align: center;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 0 5px rgba(0,0,0,0.3);
     flex-grow: 1;
-    flex-basis: 140px; /* << RESTORED Original Basis */
-    min-width: 130px; /* << RESTORED Original Min Width */
+    flex-basis: 140px;
+    min-width: 130px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    /* Removed justify-content: space-between; let content flow */
 }
-.player-card.active-turn { background-color: #6a5a4a; box-shadow: 0 0 15px 3px #ffcc00; }
-.player-name {
-    font-size: 0.9em; /* << RESTORED Original Font Size */
+.player-card.active-turn {
+    background-color: #6a5a4a;
+    box-shadow: 0 0 15px 3px #ffcc00;
+}
+
+/* --- Player Card Content --- */
+.player-info-top {
+    display: flex; /* Keep flex for name alignment if needed */
+    justify-content: flex-start; /* Align name to the left */
+    align-items: center;
+    margin-bottom: 5px;
+    /* Add padding to prevent name running under the absolute icon */
+    padding-right: 30px; /* Adjust based on icon size + desired gap */
+}
+.player-name { /* Consolidated rule */
+    font-size: 0.9em;
     color: #c8b084;
-    margin-bottom: 8px; /* << RESTORED Original Margin */
     text-shadow: 1px 1px #000;
     word-break: break-word;
+    text-align: left;
+    /* flex-grow: 1; */ /* May not be needed now */
+    /* margin-right: 5px; */ /* Remove margin */
 }
+
+/* --- POSITION THE INVENTORY ICON --- */
+.inventory-button-icon {
+    /* width: 24px; */ /* Keep existing size */
+    /* height: 24px; */
+    width: clamp(40px, 3vw, 66px); /* Responsive size */
+    height: clamp(40px, 3vw, 66px);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    /* flex-shrink: 0; */ /* Not needed for absolute */
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    /* vertical-align: middle; */ /* Not needed for absolute */
+    position: absolute; /* Take out of normal flow */
+    top: 5px;         /* Distance from top */
+    right: 5px;        /* Distance from right */
+    z-index: 5;        /* Ensure it's above other content */
+}
+.inventory-button-icon:hover {
+    transform: scale(1.15);
+}
+
 .player-score {
-    font-size: 1.3em; /* << RESTORED Original Font Size */
-    margin-bottom: 10px; /* << RESTORED Original Margin */
+    font-size: 1.3em;
+    margin-bottom: 10px;
     display: block;
     transition: color 0.3s ease;
+    margin-top: 5px; /* Add some space below player-info-top */
 }
+
 .player-score.score-positive { color: #90ee90; }
 .player-score.score-negative { color: #ff6b6b; }
+.player-score.score-change { animation: score-flash 0.5s ease-out; }
 
-/* <<< RESTORED Score Buttons Style >>> */
+.score-buttons {
+    margin-top: auto; /* Pushes buttons down if space allows */
+    padding-top: 8px; /* Space above buttons */
+}
 .score-buttons button {
     font-family: 'Press Start 2P', cursive;
     background: none;
     border: 2px solid #90ee90;
     color: #90ee90;
     border-radius: 4px;
-    padding: 4px 6px; /* Original */
-    font-size: 0.7em; /* Original */
+    padding: 4px 6px;
+    font-size: 0.7em;
     cursor: pointer;
-    margin: 0 4px; /* Original */
+    margin: 0 4px;
     transition: background-color 0.2s, color 0.2s;
 }
 .score-buttons button:hover { background-color: #90ee90; color: #2d241d; }
 .score-buttons .subtract-score { border-color: #ff6b6b; color: #ff6b6b; }
 .score-buttons .subtract-score:hover { background-color: #ff6b6b; color: #2d241d; }
 
-/* Score Change Flash Animation */
-.player-score.score-change { animation: score-flash 0.5s ease-out; }
-@keyframes score-flash { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.7; } }
+/* --- Hide Player Card Inventory Icon Row --- */
+.player-inventory {
+    display: none; /* Hides the row of small card icons */
+}
+/* --- Treasure Map Modal Styles (Golden Theme) --- */
+.treasure-map-modal .modal-content {
+    max-width: 650px;
+    /* background-color: #7a6a5a; */ /* Old wood/parchment */
+    background-color: #B8860B; /* DarkGoldenrod base */
+    border: 5px solid #8B4513; /* SaddleBrown border */
+    color: #F5DEB3; /* Wheat/Light Parchment text */
+    text-shadow: 1px 1px #5a3a1a; /* Darker shadow for light text */
+}
+.treasure-map-modal h2 {
+    font-size: clamp(1.2em, 2vw + 0.5rem, 1.6em);
+    /* color: #4a3a2a; */
+    color: #FFD700; /* Gold */
+    margin-bottom: 15px;
+    text-shadow: 2px 2px #8B4513; /* Darker Brown shadow */
+}
+.treasure-map-modal p { /* Instructions text */
+    font-size: 0.9em;
+    margin-bottom: 25px;
+    line-height: 1.4;
+    /* color: #4d3d2d; */
+    color: #F5DEB3; /* Match modal text */
+}
+.treasure-card-slots {
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch; /* Make slots equal height */
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: rgba(139, 69, 19, 0.3); /* Semi-transparent SaddleBrown */
+    border: 2px dashed #DAA520; /* Goldenrod dashed border */
+}
+.treasure-slot {
+    text-align: center;
+    width: 30%;
+    max-width: 150px;
+    padding: 10px;
+    border: 3px solid #DAA520; /* Goldenrod solid border */
+    /* background-color: #c8b084; */ /* Lighter parchment */
+    background-color: #F5DEB3; /* Wheat */
+    min-height: 200px; /* Adjusted min-height */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align items top */
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+}
+.slot-label {
+    font-size: 0.8em;
+    /* color: #5a4a3a; */
+    color: #8B4513; /* SaddleBrown label text */
+    margin-bottom: 10px;
+    font-weight: bold;
+    display: block;
+    flex-shrink: 0; /* Prevent label from shrinking */
+}
+.treasure-slot img {
+    display: block;
+    max-width: 100%;
+    height: 140px; /* Fixed height for consistency */
+    /* max-height: 140px; */ /* Max height */
+    margin: auto 0 0 0; /* Pushes image to bottom if space allows */
+    border: 1px solid #b8860b; /* DarkGoldenrod */
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    object-fit: contain; /* Fit card image */
+    background-color: #e0c8a0; /* Slightly darker bg for image area */
+    transition: opacity 0.3s ease;
+}
+
+/* Style for empty slots */
+.treasure-slot img.slot-empty {
+    /* src="" handles no image, this styles the element if needed */
+    opacity: 0; /* Make placeholder invisible */
+    /* Optional: Add a subtle background pattern or border to the img element itself */
+     border: 1px dashed #a08060; /* Example subtle border */
+     background-color: rgba(0,0,0,0.05);
+     height: 140px; /* Ensure empty img maintains height */
+}
+
+
+#open-treasure-btn {
+    font-family: 'Press Start 2P', cursive;
+    padding: 12px 25px;
+    /* background-color: #4CAF50; */ /* Green */
+    background-color: #DAA520; /* Goldenrod */
+    color: #4a3000; /* Dark brown text */
+    border: 3px solid #8B4513; /* SaddleBrown */
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.2s, opacity 0.2s;
+    margin-top: 10px;
+    display: block; /* Center button */
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+}
+#open-treasure-btn:hover:not(:disabled) {
+    background-color: #FFD700; /* Gold */
+}
+#open-treasure-btn:disabled {
+    background-color: #a08d70; /* Greyed-out parchment/gold */
+    border-color: #706050;
+    color: #706050;
+    cursor: not-allowed;
+    opacity: 0.7;
+    box-shadow: none;
+}
+.treasure-status-message { /* Optional status text */
+    margin-top: 15px;
+    font-size: 0.8em;
+    /* color: #6d5d4d; */
+    color: #F5DEB3; /* Match modal text */
+    text-shadow: 1px 1px #5a3a1a;
+    min-height: 1.2em; /* Prevent layout shift */
+    text-align: center;
+}
 
 /* --- Modal Styling (Shared Base) --- */
 .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; background-color: rgba(0, 0, 0, 0.8); padding: 20px; }
-.modal-content { font-family: 'Press Start 2P', cursive; background-color: #4a3a2a; margin: auto; padding: 30px; /* << RESTORED Original Padding */ border: 5px solid #2d241d; width: 80%; max-width: 600px; color: #f0e0c0; position: relative; text-align: center; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); max-height: 90vh; overflow-y: auto; }
-.close-button { color: #aaa; position: absolute; top: 10px; /* Original */ right: 20px; /* Original */ font-size: 28px; /* Original */ font-weight: bold; cursor: pointer; z-index: 10; line-height: 1; }
+.modal-content { font-family: 'Press Start 2P', cursive; background-color: #4a3a2a; margin: auto; padding: 30px; border: 5px solid #2d241d; width: 80%; max-width: 600px; color: #f0e0c0; position: relative; text-align: center; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); max-height: 90vh; overflow-y: auto; }
+.close-button { color: #aaa; position: absolute; top: 10px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; z-index: 1010; line-height: 1; }
 .close-button:hover, .close-button:focus { color: #fff; text-decoration: none; }
 
 /* --- Generic Info Modal Styles --- */
 .info-modal .modal-content { max-width: 500px; background-color: #5a4a3a; color: #e0e0e0; }
-.info-modal h3 { font-size: clamp(1em, 1.5vw + 0.5rem, 1.2em); /* Keep scaled */ margin-bottom: 15px; color: #c8b084; text-shadow: 1px 1px #000; }
-.info-modal p { font-size: 0.9em; /* << RESTORED Original Font Size */ margin-bottom: 25px; line-height: 1.4; }
-/* <<< RESTORED Info Modal Button Style >>> */
-.info-modal button {
-    font-family: 'Press Start 2P', cursive;
-    padding: 10px 25px; /* Original */
-    background-color: #7a6a5a; /* Original */
-    color: #f0e0c0; /* Original */
-    border: 2px solid #2d241d; /* Original */
-    cursor: pointer;
-    font-size: 0.9em; /* Original */
-    transition: background-color 0.2s;
-}
+.info-modal h3 { font-size: clamp(1em, 1.5vw + 0.5rem, 1.2em); margin-bottom: 15px; color: #c8b084; text-shadow: 1px 1px #000; }
+.info-modal p { font-size: 0.9em; margin-bottom: 25px; line-height: 1.4; }
+.info-modal button { font-family: 'Press Start 2P', cursive; padding: 10px 25px; background-color: #7a6a5a; color: #f0e0c0; border: 2px solid #2d241d; cursor: pointer; font-size: 0.9em; transition: background-color 0.2s; }
 .info-modal button:hover { background-color: #9a8a7a; }
 
 /* --- Seer Peek Modal Styles --- */
 .seer-peek-modal .modal-content { max-width: 500px; background-color: #4a315a; border: 5px solid #2d1d3a; color: #e0d0f0; }
-.seer-peek-modal h3 { font-size: clamp(1em, 1.5vw + 0.5rem, 1.2em); /* Keep scaled */ margin-bottom: 15px; color: #e8d8ff; text-shadow: 1px 1px #1a0a2a; }
-.seer-peek-modal p { font-size: 0.9em; /* << RESTORED Original Font Size */ margin-bottom: 10px; line-height: 1.3; }
-#seer-peek-words { font-size: 1.1em; /* << RESTORED Original Font Size */ color: #fff; background-color: rgba(0,0,0,0.3); padding: 15px; margin: 10px 0 20px 0; border: 1px dashed #a898ba; min-height: 50px; display: flex; justify-content: center; align-items: center; text-align: center; line-height: 1.5; word-spacing: 0.5em; flex-wrap: wrap; gap: 0.5em; }
+.seer-peek-modal h3 { font-size: clamp(1em, 1.5vw + 0.5rem, 1.2em); margin-bottom: 15px; color: #e8d8ff; text-shadow: 1px 1px #1a0a2a; }
+.seer-peek-modal p { font-size: 0.9em; margin-bottom: 10px; line-height: 1.3; }
+#seer-peek-words { font-size: 1.1em; color: #fff; background-color: rgba(0,0,0,0.3); padding: 15px; margin: 10px 0 20px 0; border: 1px dashed #a898ba; min-height: 50px; display: flex; justify-content: center; align-items: center; text-align: center; line-height: 1.5; word-spacing: 0.5em; flex-wrap: wrap; gap: 0.5em; }
 .seer-peek-buttons { margin-top: 20px; display: flex; justify-content: center; gap: 15px; }
-/* <<< RESTORED Seer Peek Button Style >>> */
-.seer-peek-buttons button {
-    font-family: 'Press Start 2P', cursive;
-    padding: 10px 20px; /* Original */
-    border: 2px solid #2d1d3a; /* Original */
-    cursor: pointer;
-    font-size: 0.85em; /* Original */
-    transition: background-color 0.2s, color 0.2s;
-}
+.seer-peek-buttons button { font-family: 'Press Start 2P', cursive; padding: 10px 20px; border: 2px solid #2d1d3a; cursor: pointer; font-size: 0.85em; transition: background-color 0.2s, color 0.2s; }
 #seer-accept-btn { background-color: #7a5a8a; color: #f0e0ff; }
 #seer-accept-btn:hover { background-color: #9a7aaa; }
 #seer-reject-btn { background-color: #5a4a6a; color: #d0c0e0; }
@@ -431,129 +622,335 @@ body {
 /* --- Visibility Control --- */
 body.setup-active .game-environment, body.game-active .setup-modal { display: none; }
 body.setup-active .setup-modal, body.game-active .game-environment { display: flex; }
-body.game-active .modal[style*="display: flex"] { justify-content: center; align-items: center; }
+body.game-active .modal { display: none; }
+body.game-active .modal[style*="display: flex"] { display: flex !important; justify-content: center; align-items: center; }
 
 /* --- Player Select Modal Styles --- */
 .player-select-modal .modal-content { max-width: 450px; background-color: #6a4a3a; }
 #player-select-list { margin-top: 20px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
-/* <<< RESTORED Player Select Button Style >>> */
-#player-select-list button {
-    font-family: 'Press Start 2P', cursive;
-    padding: 10px 20px; /* Original */
-    background-color: #4a3a2a; /* Original */
-    color: #c8b084; /* Original */
-    border: 2px solid #2d241d; /* Original */
-    cursor: pointer;
-    font-size: 0.9em; /* Original */
-    transition: background-color 0.2s, color 0.2s;
-    width: 80%;
-    max-width: 250px;
-}
+#player-select-list button { font-family: 'Press Start 2P', cursive; padding: 10px 20px; background-color: #4a3a2a; color: #c8b084; border: 2px solid #2d241d; cursor: pointer; font-size: 0.9em; transition: background-color 0.2s, color 0.2s; width: 80%; max-width: 250px; }
 #player-select-list button:hover { background-color: #2d241d; color: #f0e0c0; }
 
 /* --- Setup Modal Specific Styles --- */
 .setup-content { background-color: #5a4a3a; color: #e0e0e0; }
-.setup-content h2 { font-size: clamp(1.1em, 1.8vw + 0.5rem, 1.4em); /* Keep scaled */ margin-bottom: 20px; color: #c8b084; text-shadow: 1px 1px #000; }
-#player-count-step label, #player-names-step p { font-size: 0.9em; /* << RESTORED Original Font Size */ display: block; margin-bottom: 10px; }
-/* <<< RESTORED Setup Input Styles >>> */
+.setup-content h2 { font-size: clamp(1.1em, 1.8vw + 0.5rem, 1.4em); margin-bottom: 20px; color: #c8b084; text-shadow: 1px 1px #000; }
+#player-count-step label, #player-names-step p { font-size: 0.9em; display: block; margin-bottom: 10px; }
 #player-count-step input[type="number"],
-#player-names-step input[type="text"] {
-    font-family: 'Press Start 2P', cursive;
-    padding: 8px; /* Original */
-    margin-bottom: 15px;
-    border: 2px solid #2d241d; /* Original */
-    background-color: #f0e0c0; /* Original */
-    color: #333; /* Original */
-}
+#player-names-step input[type="text"] { font-family: 'Press Start 2P', cursive; padding: 8px; margin-bottom: 15px; border: 2px solid #2d241d; background-color: #f0e0c0; color: #333; }
 #player-count-step input[type="number"] { width: 80px; text-align: center; }
-#player-names-step input[type="text"] { width: 80%; max-width: 250px; display: block; margin-left: auto; margin-right: auto; text-align: left; } /* Original Alignment */
-
+#player-names-step input[type="text"] { width: 80%; max-width: 250px; display: block; margin-left: auto; margin-right: auto; text-align: left; }
 #player-name-inputs { margin-bottom: 20px; }
-/* <<< RESTORED Setup Button Style >>> */
-.setup-content button {
-    font-family: 'Press Start 2P', cursive;
-    padding: 10px 15px; /* Original */
-    background-color: #7a6a5a; /* Original */
-    color: #f0e0c0; /* Original */
-    border: 2px solid #2d241d; /* Original */
-    cursor: pointer;
-    font-size: 0.9em; /* Original */
-    transition: background-color 0.2s;
-    margin-top: 10px;
-}
+.setup-content button { font-family: 'Press Start 2P', cursive; padding: 10px 15px; background-color: #7a6a5a; color: #f0e0c0; border: 2px solid #2d241d; cursor: pointer; font-size: 0.9em; transition: background-color 0.2s; margin-top: 10px; }
 .setup-content button:hover { background-color: #9a8a7a; }
 .error-message { color: #ff6b6b; font-size: 0.8em; margin-top: 10px; min-height: 1em; display: none; }
 
 /* --- Question Modal Specific Styles --- */
-#question-points-display { font-size: 2em; /* << RESTORED Original Font Size */ color: #ffcc00; text-shadow: 2px 2px #000000; margin-bottom: 25px; /* << RESTORED Original Margin */ line-height: 1.2; font-weight: bold; }
-#question-text { font-size: 1.4em; /* << RESTORED Original Font Size */ margin-bottom: 20px; min-height: 80px; line-height: 1.5; }
-#answer-text { font-size: 1.2em; /* << RESTORED Original Font Size */ margin-top: 15px; margin-bottom: 25px; color: #90ee90; line-height: 1.4; }
-/* <<< RESTORED Question Modal Button Style >>> */
-.question-content button {
-    font-family: 'Press Start 2P', cursive;
-    padding: 10px 20px; /* Original */
-    background-color: #7a6a5a; /* Original */
-    color: #f0e0c0; /* Original */
-    border: 2px solid #2d241d; /* Original */
-    cursor: pointer;
-    font-size: 1em; /* Original */
-    transition: background-color 0.2s;
-    margin: 10px 5px 0 5px;
-    display: inline-block;
-}
+#question-points-display { font-size: 2em; color: #ffcc00; text-shadow: 2px 2px #000000; margin-bottom: 25px; line-height: 1.2; font-weight: bold; }
+#question-text { font-size: 1.4em; margin-bottom: 20px; min-height: 80px; line-height: 1.5; }
+#answer-text { font-size: 1.2em; margin-top: 15px; margin-bottom: 25px; color: #90ee90; line-height: 1.4; }
+.question-content button { font-family: 'Press Start 2P', cursive; padding: 10px 20px; background-color: #7a6a5a; color: #f0e0c0; border: 2px solid #2d241d; cursor: pointer; font-size: 1em; transition: background-color 0.2s; margin: 10px 5px 0 5px; display: inline-block; }
 .question-content button:hover { background-color: #9a8a7a; }
 
 /* --- Card Modal --- */
-.card-content { background-color: #3f3121; }
-.card-content h2 { font-size: clamp(1.1em, 1.8vw + 0.5rem, 1.4em); /* Keep scaled */ color: #c8b084; margin-bottom: 20px; }
-#card-image-container { width: 100%; max-width: 300px; margin: 0 auto; }
-#card-image { display: block; width: 100%; height: auto; border: 3px solid #1a140d; image-rendering: pixelated; image-rendering: -moz-crisp-edges; image-rendering: crisp-edges; }
+
+/* --- START: Transparent Card Modal Content --- */
+.card-modal .modal-content {
+    background-color: transparent !important; /* Remove the brown background */
+    border: none !important;                 /* Remove the border */
+    box-shadow: none !important;             /* Remove any shadow */
+    padding: 0 !important;                   /* Remove padding around the image container */
+    max-width: fit-content;                  /* Let the content (image container) determine width */
+    width: auto;                             /* Override default width */
+    display: flex;                           /* Ensure centering */
+    justify-content: center;
+    align-items: center;
+    overflow-y: visible;                     /* Remove overflow-y */
+}
+/* --- END: Transparent Card Modal Content --- */
+
+/* Hide the "Card Drawn!" title specifically in the card modal */
+.card-modal h2 {
+    display: none;
+}
+
+/* Ensure image container keeps its max size but can shrink */
+#card-image-container {
+    width: 100%;
+    max-width: 300px; /* Or your desired max card width */
+    margin: 0 auto; /* Keep it centered */
+    max-height: 85vh; /* Prevent card exceeding viewport height */
+    display: flex; /* Use flex to help center image */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ensure image scales correctly within its container */
+#card-image {
+    display: block;
+    max-width: 100%;  /* Fit width within container */
+    max-height: 100%; /* Fit height within container */
+    height: auto;     /* Maintain aspect ratio */
+    border: 3px solid #1a140d; /* Keep the border on the image itself if desired */
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    object-fit: contain; /* Ensure image fits without stretching */
+}
+
+/* Optional: Adjust close button visibility */
+.card-modal .close-button {
+    color: #ffffff;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    top: 20px;
+    right: 30px;
+    z-index: 1011; /* Ensure above potential image z-index */
+}
+
+/* --- Sacrificial Goblet Input Modal Styles --- */
+.goblet-input-modal .modal-content { max-width: 450px; background-color: #4d1f1f; border: 5px solid #330d0d; color: #f0d0a0; }
+.goblet-input-modal h2 { font-size: clamp(1.1em, 1.8vw + 0.5rem, 1.4em); color: #ff4d4d; margin-bottom: 20px; text-shadow: 1px 1px #1a0a00; }
+.goblet-input-modal p { font-size: 0.9em; margin-bottom: 25px; line-height: 1.4; }
+#goblet-symbol-img { display: block; margin: 15px auto 20px auto; max-width: 150px; height: auto; image-rendering: pixelated; image-rendering: -moz-crisp-edges; image-rendering: crisp-edges; }
+.goblet-slider-container { margin: 20px 0 30px 0; display: flex; align-items: center; justify-content: center; gap: 15px; }
+#goblet-amount-display { font-weight: bold; font-size: 1.2em; color: #a00000; text-shadow: 1px 1px #330000; min-width: 35px; text-align: right; }
+#goblet-amount-slider { -webkit-appearance: none; appearance: none; width: 60%; height: 12px; background: transparent; cursor: pointer; outline: none; }
+#goblet-amount-slider::-webkit-slider-runnable-track { width: 100%; height: 12px; cursor: pointer; background-color: #6b0000; border: 2px solid #330000; border-radius: 0; box-shadow: inset 0 0 3px rgba(0,0,0,0.6); }
+#goblet-amount-slider::-moz-range-track { width: 100%; height: 12px; cursor: pointer; background-color: #6b0000; border: 2px solid #330000; border-radius: 0; box-shadow: inset 0 0 3px rgba(0,0,0,0.6); }
+#goblet-amount-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; border: 2px solid #330000; height: 20px; width: 14px; background: #ff4d4d; border-radius: 0; cursor: pointer; margin-top: -6px; box-shadow: 1px 1px 2px rgba(0,0,0,0.4); }
+#goblet-amount-slider:hover::-webkit-slider-thumb { background: #ff6666; }
+#goblet-amount-slider:active::-webkit-slider-thumb { background: #cc0000; }
+#goblet-amount-slider::-moz-range-thumb { border: 2px solid #330000; height: 20px; width: 14px; background: #ff4d4d; border-radius: 0; cursor: pointer; box-shadow: 1px 1px 2px rgba(0,0,0,0.4); }
+#goblet-amount-slider:hover::-moz-range-thumb { background: #ff6666; }
+#goblet-amount-slider:active::-moz-range-thumb { background: #cc0000; }
+#goblet-accept-btn { font-family: 'Press Start 2P', cursive; padding: 10px 20px; background-color: #8b0000; color: #ffdddd; border: 2px solid #330000; cursor: pointer; font-size: 0.9em; transition: background-color 0.2s; margin-top: 10px; }
+#goblet-accept-btn:hover { background-color: #a52a2a; }
+
+/* --- Inventory Modal Styles --- */
+.inventory-modal .modal-content {
+    max-width: 800px; /* Increased max-width */
+    background-color: #3f3121; /* Dark wood */
+    border: 5px solid #1a140d;
+    color: #c8b084; /* Parchment text */
+}
+.inventory-modal h3 {
+    font-size: clamp(1.1em, 1.8vw + 0.5rem, 1.4em);
+    margin-bottom: 25px;
+    text-shadow: 1px 1px #000;
+}
+.inventory-modal-cards-container {
+    display: grid;
+    /* Adjusted grid for LARGER cards */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Minimum 150px width */
+    gap: 20px; /* Increased gap */
+    padding: 15px; /* Increased padding */
+    max-height: 65vh; /* Allow slightly more height */
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid #5a4a3a;
+    min-height: 150px; /* Minimum height to accommodate larger cards */
+}
+/* Style for the message when inventory is empty */
+.inventory-modal-cards-container:empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-style: italic; /* Style empty message */
+    color: #a898ba; /* Different color for empty message */
+}
+.inventory-modal-card-item {
+    text-align: center;
+    position: relative; /* Needed for absolute positioning of count */
+    cursor: default; /* Default cursor */
+}
+
+.inventory-modal-card-image {
+    max-width: 100%;
+    height: auto;
+    max-height: 200px;
+    display: block;
+    margin: 0 auto;
+    border: 2px solid #5a4a3a;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: border-color 0.2s ease, transform 0.2s ease; /* Add transition */
+}
+
+/* --- NEW: Inventory Count Indicator --- */
+.inventory-card-count {
+    position: absolute;
+    top: -5px; /* Position slightly overlapping top */
+    right: -5px; /* Position slightly overlapping right */
+    /* background-color: rgba(0, 0, 0, 0.8); */
+    background-color: #4a3a2a; /* Dark Brown Background */
+    /* color: #ffcc00; */ /* Gold */
+    color: #c8b084; /* Parchment Text */
+    font-size: clamp(0.6em, 1vw + 0.1rem, 0.75em); /* Slightly smaller */
+    font-weight: bold;
+    padding: 1px 4px; /* Adjust padding */
+    /* border-radius: 3px; */
+    border-radius: 50%; /* Make it circular */
+    min-width: 16px; /* Ensure minimum size for circle */
+    min-height: 16px;
+    display: inline-flex; /* Use flex to center text in circle */
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid #333; */
+    border: 1px solid #2d241d; /* Darker Brown Border */
+    line-height: 1;
+    pointer-events: none; /* Don't interfere with clicks */
+    z-index: 2; /* Above image */
+    text-shadow: 1px 1px rgba(0,0,0,0.5); /* Add subtle shadow */
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.4); /* Subtle shadow on the circle */
+}
+/* --- NEW: Active Card Styling --- */
+.inventory-modal-card-item.active-card {
+    cursor: pointer; /* Indicate clickable */
+}
+
+.inventory-modal-card-item.active-card .inventory-modal-card-image:hover {
+    border-color: #ffd700; /* Gold border on hover */
+    transform: scale(1.05); /* Slight scale effect */
+}
+
+/* --- Roulette Modal Styles --- */
+.roulette-modal .modal-content {
+    max-width: 500px;
+    background-color: #2a5a4a; /* Greenish */
+    border: 5px solid #1d3a2d;
+    color: #d0f0e0;
+}
+.roulette-modal h2 {
+    font-size: clamp(1.1em, 1.8vw + 0.5rem, 1.4em);
+    color: #a0e0c0;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px #1a3a2a;
+}
+.roulette-modal p {
+    font-size: 0.9em;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+#roulette-wheel-img { /* Optional image styling */
+    display: block;
+    margin: 10px auto 20px auto;
+    max-width: 100px;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+.roulette-slider-container {
+    margin: 20px 0 25px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+#roulette-amount-display {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #ffffff;
+    text-shadow: 1px 1px #1d3a2d;
+    min-width: 35px;
+    text-align: right;
+}
+#roulette-amount-slider {
+    -webkit-appearance: none; appearance: none;
+    width: 60%; height: 12px;
+    background: transparent; cursor: pointer; outline: none;
+}
+#roulette-amount-slider::-webkit-slider-runnable-track {
+    width: 100%; height: 12px; cursor: pointer;
+    background-color: #1d3a2d; border: 2px solid #0d1a0d;
+    border-radius: 0; box-shadow: inset 0 0 3px rgba(0,0,0,0.6);
+}
+#roulette-amount-slider::-moz-range-track {
+    width: 100%; height: 12px; cursor: pointer;
+    background-color: #1d3a2d; border: 2px solid #0d1a0d;
+    border-radius: 0; box-shadow: inset 0 0 3px rgba(0,0,0,0.6);
+}
+#roulette-amount-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    border: 2px solid #0d1a0d; height: 20px; width: 14px;
+    background: #a0e0c0; border-radius: 0;
+    cursor: pointer; margin-top: -6px;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+#roulette-amount-slider:hover::-webkit-slider-thumb { background: #c0f0d0; }
+#roulette-amount-slider:active::-webkit-slider-thumb { background: #70a080; }
+#roulette-amount-slider::-moz-range-thumb {
+    border: 2px solid #0d1a0d; height: 20px; width: 14px;
+    background: #a0e0c0; border-radius: 0;
+    cursor: pointer; box-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+#roulette-amount-slider:hover::-moz-range-thumb { background: #c0f0d0; }
+#roulette-amount-slider:active::-moz-range-thumb { background: #70a080; }
+
+#roulette-gamble-btn {
+    font-family: 'Press Start 2P', cursive;
+    padding: 12px 25px;
+    background-color: #4a7a6a;
+    color: #ffffff;
+    border: 2px solid #1d3a2d;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s;
+    margin-top: 10px;
+}
+#roulette-gamble-btn:hover {
+    background-color: #6a9a8a;
+}
+/* Ensure roulette error message uses the shared error style */
+#roulette-error {
+     margin-top: 15px; /* Add some space above the button */
+}
 
 
 /* === Responsive Adjustments === */
-/* Keep structural changes from previous version, clamp() handles most sizing */
-
 @media (max-width: 1400px) {
     .game-environment { flex-direction: column; gap: clamp(15px, 3vh, 25px); padding: 0 clamp(5px, 2vw, 10px); }
     .main-game-area { width: 100%; order: 2; flex-grow: 1; }
     .side-icon { margin: clamp(10px, 2vh, 15px) 0; order: 1; }
-    /* <<< RESTORED Original Stacked Side Icon Sizes >>> */
+    /* Styles specifically for when icons are stacked */
     .game-environment[style*="flex-direction: column"] .side-icon { width: 80px; gap: 3px; }
     .game-environment[style*="flex-direction: column"] .side-icon > img { width: 60px; max-width: none; }
-    .game-environment[style*="flex-direction: column"] .side-icon span { font-size: 0.65em; } /* Adjust if needed */
+    .game-environment[style*="flex-direction: column"] .side-icon > span { font-size: 0.65em; }
     .game-environment[style*="flex-direction: column"] .sub-icon { margin-top: 15px; }
     .game-environment[style*="flex-direction: column"] .sub-icon img { width: 75%; max-width: 50px; }
-    .game-environment[style*="flex-direction: column"] .sub-icon span { font-size: 0.65em; } /* Adjust if needed */
+    .game-environment[style*="flex-direction: column"] .sub-icon span { font-size: 0.65em; }
 }
 
 @media (max-width: 900px) {
-     .categories, .questions-grid { grid-template-columns: repeat(3, 1fr); /* Structural */ gap: 8px; /* Original medium gap */ }
-     .category-header { font-size: 0.75em; } /* Original medium font */
-     .chest { /* max-width: clamp(...) handles this */ }
-     .player-card { flex-basis: 140px; min-width: 130px;} /* Keep original medium size */
-     #player-info-area { justify-content: space-around; }
-     /* Side icons smaller on medium screens (original) */
-     /* Apply only if NOT stacked */
-     .game-environment:not([style*="flex-direction: column"]) .side-icon:not(:only-child) { width: 100px; }
-     .game-environment:not([style*="flex-direction: column"]) .side-icon > img { max-width: 80px; }
-     .game-environment:not([style*="flex-direction: column"]) .sub-icon img { max-width: 65px; }
+    .categories, .questions-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .category-header { font-size: 0.75em; }
+    .player-card { flex-basis: 140px; min-width: 130px;}
+    #player-info-area { justify-content: space-around; }
+    /* Styles specifically for when icons are side-by-side but screen is smaller */
+    .game-environment:not([style*="flex-direction: column"]) .side-icon { width: 100px; } /* Reduced width */
+    .game-environment:not([style*="flex-direction: column"]) .side-icon > img { max-width: 80px; }
+    .game-environment:not([style*="flex-direction: column"]) .sub-icon img { max-width: 65px; }
 }
 
 @media (max-width: 768px) {
-    body { padding: 10px; } /* Original small padding */
-    .game-title h1 { font-size: 1.8em; } /* Original small title */
-    .category-header { font-size: 0.7em; min-height: 50px; padding: 10px 2px; } /* Original small header */
-    #question-text { font-size: 1.1em; } /* Original small question */
-    #answer-text { font-size: 1em; } /* Original small answer */
-    .player-card { min-width: 120px; flex-basis: 120px; padding: 10px;} /* Original small card */
-    .player-name { font-size: 0.9em; } /* Original small name */
-    .player-score { font-size: 1.2em; } /* Original small score */
-    .score-buttons button { font-size: 0.7em; padding: 4px 6px;} /* Original small buttons */
-    #player-info-area { gap: 10px; width: 100%; padding: 10px;} /* Original small player area */
-    .turn-controls { gap: 5px; }
-    .turn-controls button { font-size: 0.9em; padding: 1px 5px;} /* Original small turn button */
-
-    /* Further reduce side icon size when stacked (original) */
+    body { padding: 5px; }
+    .game-environment { gap: clamp(10px, 1.5vh + 0.8vw, 20px); padding-top: 10px; padding-bottom: 10px; }
+    .main-game-area { max-width: 95%; }
+    .game-title h1 { font-size: 1.6em; }
+    .category-header { font-size: 0.65em; min-height: 45px; padding: 8px 2px; }
+    .questions-grid { gap: 8px; }
+    .category-column { gap: 10px; }
+    #question-text { font-size: 1em; }
+    #answer-text { font-size: 0.9em; }
+    #player-info-area { gap: 8px; padding: 8px; margin-top: 15px; max-width: 95%; }
+    .player-card { min-width: 110px; flex-basis: 110px; padding: 8px; }
+    .player-name { font-size: 0.8em; }
+    .player-score { font-size: 1.1em; }
+    .inventory-modal-cards-container { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px;} /* Smaller cards in modal on tablet */
+    .inventory-modal-card-image { max-height: 160px; }
+    /* Further adjustments for stacked icons on tablet */
     .game-environment[style*="flex-direction: column"] .side-icon { width: 70px; gap: 4px; }
     .game-environment[style*="flex-direction: column"] .side-icon > img { max-width: 50px; }
     .game-environment[style*="flex-direction: column"] .side-icon span { font-size: 0.6em; }
@@ -563,31 +960,30 @@ body.game-active .modal[style*="display: flex"] { justify-content: center; align
 }
 
 @media (max-width: 600px) {
-     /* chest max-width: clamp(...) handles this */
-     .categories, .questions-grid { grid-template-columns: repeat(2, 1fr); /* Structural */ gap: 5px; /* Original tiny gap */ }
-     #player-info-area { flex-direction: column; /* Structural */ }
-     #player-cards-container { justify-content: center; width: 100%;}
-     .turn-controls { margin-top: 10px; }
-     .player-card { flex-basis: 150px; min-width: 140px;} /* Original tiny card size */
-
-     /* Side icons when stacked (original) */
-     .game-environment[style*="flex-direction: column"] .side-icon { width: 60px; }
-     .game-environment[style*="flex-direction: column"] .side-icon > img { max-width: 45px; }
-     .game-environment[style*="flex-direction: column"] .sub-icon img { max-width: 35px; }
+    .categories, .questions-grid { grid-template-columns: repeat(2, 1fr); gap: 5px; }
+    #player-info-area { flex-direction: column; }
+    #player-cards-container { justify-content: center; width: 100%;}
+    .turn-controls { margin-top: 10px; } /* Removed as it doesn't exist */
+    .player-card { flex-basis: 150px; min-width: 140px;}
+    .inventory-modal-cards-container { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px;} /* Smaller cards in modal on mobile */
+    .inventory-modal-card-image { max-height: 140px; }
+    /* Further adjustments for stacked icons on mobile */
+    .game-environment[style*="flex-direction: column"] .side-icon { width: 60px; }
+    .game-environment[style*="flex-direction: column"] .side-icon > img { max-width: 45px; }
+    .game-environment[style*="flex-direction: column"] .sub-icon img { max-width: 35px; }
 }
 
 @media (max-width: 480px) {
-    .game-title h1 { font-size: 1.5em; } /* Original smallest title */
-    .category-header { font-size: 0.65em; line-height: 1.1; min-height: 40px;} /* Original smallest header */
-    /* chest max-width: clamp(...) handles this */
-    .modal-content { width: 95%; padding: 20px; } /* Original smallest padding */
-    .close-button { font-size: 24px; top: 5px; right: 10px; } /* Original smallest close */
-    #player-cards-container { flex-direction: column; /* Structural */ align-items: center; gap: 8px; }
-    .player-card { width: 80%; min-width: unset; flex-basis: auto; flex-grow: 0;} /* Original full stack */
-    .turn-controls { padding: 5px 10px;}
-    .turn-controls button { font-size: 1em; padding: 1px 8px;} /* Original smallest turn button */
-
-    /* Side icons smallest (original) */
+    .game-title h1 { font-size: 1.5em; }
+    .category-header { font-size: 0.65em; line-height: 1.1; min-height: 40px;}
+    .modal-content { width: 95%; padding: 20px; }
+    .close-button { font-size: 24px; top: 5px; right: 10px; }
+    #player-cards-container { flex-direction: column; align-items: center; gap: 8px; }
+    .player-card { width: 80%; min-width: unset; flex-basis: auto; flex-grow: 0;}
+    .score-buttons button { font-size: 1em; padding: 1px 8px;} /* Increased button size slightly for touch */
+    .inventory-modal-cards-container { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px;} /* Even smaller cards in modal */
+    .inventory-modal-card-image { max-height: 120px; }
+    /* Further adjustments for stacked icons on small mobile */
     .game-environment[style*="flex-direction: column"] .side-icon { width: 50px; gap: 2px; }
     .game-environment[style*="flex-direction: column"] .side-icon > img { max-width: 35px; }
     .game-environment[style*="flex-direction: column"] .side-icon span { font-size: 0.55em; }
